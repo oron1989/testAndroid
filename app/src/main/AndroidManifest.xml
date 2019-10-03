@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oron.testandroid">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,10 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.oron.testandroid.Activities.MovieDetailsActivity"></activity>
-        <activity android:name="com.oron.testandroid.Activities.MovieListActivity" />
-        <activity android:name="com.oron.testandroid.Activities.SplashActivity" />
-        <activity android:name="com.oron.testandroid.Activities.MainActivity">
+        <activity android:name=".Activities.ScannerActivity"></activity>
+        <activity android:name=".Activities.MovieDetailsActivity" />
+        <activity android:name=".Activities.MovieListActivity" />
+        <activity android:name=".Activities.SplashActivity" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +26,5 @@
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
