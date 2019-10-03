@@ -1,6 +1,7 @@
 package com.oron.testandroid.Data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.oron.testandroid.Activities.MovieDetailsActivity;
 import com.oron.testandroid.Model.Movie;
 import com.oron.testandroid.R;
 import com.squareup.picasso.Picasso;
@@ -61,7 +63,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         TextView rating;
         public int id;
 
-        public ViewHolder(@NonNull View itemView, Context ctx) {
+        public ViewHolder(@NonNull final View itemView, Context ctx) {
             super(itemView);
 
             context = ctx;
@@ -75,6 +77,15 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
                 @Override
                 public void onClick(View v) {
                     //go to the next screen
+                    int position = getAdapterPosition();
+                    Movie movie = movieList.get(position);
+                    Intent intent = new Intent(context, MovieDetailsActivity.class);
+                    intent.putExtra("title", movie.getTitle());
+                    intent.putExtra("image", movie.getImage());
+                    intent.putExtra("rating", movie.getRating());
+                    intent.putExtra("year", movie.getYear());
+
+                    context.startActivity(intent);
                 }
             });
         }

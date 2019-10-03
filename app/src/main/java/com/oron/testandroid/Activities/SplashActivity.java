@@ -29,10 +29,15 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        db = new DatabaseHandler(this);
+
+        byPassActivity();
+
+    }
+
+    private void saveMovieToDB () {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://api.androidhive.info/json/movies.json";
-
-        db = new DatabaseHandler(this);
 
         // Initialize a new JsonArrayRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -61,7 +66,8 @@ public class SplashActivity extends AppCompatActivity {
                                 Log.i("json:", movie.getTitle());
 
                                 //save to db
-                                saveMovieToDB (movie);
+                                db.addMovie(movie);
+                                //Log.d("Item Added ID:", String.valueOf(db.getMoviesCount()));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -79,13 +85,19 @@ public class SplashActivity extends AppCompatActivity {
         // Add JsonArrayRequest to the RequestQueue
         requestQueue.add(jsonArrayRequest);
 
-        //start a new activity
         startActivity(new Intent(SplashActivity.this, MovieListActivity.class));
         finish();
+
     }
 
-    private void saveMovieToDB (Movie movie) {
-        db.addMovie(movie);
-        //Log.d("Item Added ID:", String.valueOf(db.getMoviesCount()));
+    private void byPassActivity () {
+         //checks if database is empty: if not, then we just go to MovieListActivity and show all the items
+
+        if (db.getMoviesCount() > 0) {
+            startActivity(new Intent(SplashActivity.this, MovieListActivity.class));
+            finish();
+        } else {
+            saveMovieToDB();
+        }
     }
 }
