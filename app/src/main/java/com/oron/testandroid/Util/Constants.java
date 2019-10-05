@@ -13,8 +13,6 @@ public class Constants {
     public static final String KEY_MOVIE_IMAGE = "image";
     public static final String KEY_MOVIE_RATING = "rating";
     public static final String KEY_RELEASE_YEAR = "release_year";
-    private static final String KEY_MOVIE_GENRE = "genre";
+    public static final String KEY_MOVIE_GENRE = "genre";
 
-    //camera
-    public static final int REQUEST_CAMERA = 1;
 }

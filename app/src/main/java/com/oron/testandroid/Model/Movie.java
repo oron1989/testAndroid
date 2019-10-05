@@ -7,15 +7,17 @@ public class Movie {
     String image;
     double rating;
     int year;
+    String genre;
 
     public Movie() {
     }
 
-    public Movie(String title, String image, double rating, int year) {
+    public Movie(String title, String image, double rating, int year, String genre) {
         this.title = title;
         this.image = image;
         this.rating = rating;
         this.year = year;
+        this.genre = genre;
     }
 
     public int getId() {
@@ -56,5 +58,13 @@ public class Movie {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

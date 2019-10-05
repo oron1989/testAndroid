@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -27,9 +26,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 public class MovieListActivity extends AppCompatActivity {
 
@@ -67,6 +63,7 @@ public class MovieListActivity extends AppCompatActivity {
              movie.setImage(mov.getImage());
              movie.setRating(mov.getRating());
              movie.setYear(mov.getYear());
+             movie.setGenre(mov.getGenre());
 
              listItems.add(movie);
         }

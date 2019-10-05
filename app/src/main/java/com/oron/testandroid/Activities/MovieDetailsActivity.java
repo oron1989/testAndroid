@@ -40,6 +40,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             rating.setText(String.valueOf(bundle.getDouble("rating")));
             year.setText(String.valueOf(bundle.getInt("year")));
             Picasso.with(this).load(bundle.getString("image")).placeholder(android.R.drawable.ic_btn_speak_now).into(image);
+            genre.setText(bundle.getString("genre"));
 
         }
 

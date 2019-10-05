@@ -31,7 +31,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + Constants.KEY_MOVIE_TITLE + " TEXT,"
                 + Constants.KEY_MOVIE_IMAGE + " TEXT,"
                 + Constants.KEY_MOVIE_RATING + " TEXT,"
-                + Constants.KEY_RELEASE_YEAR + " TEXT);";
+                + Constants.KEY_RELEASE_YEAR + " TEXT, "
+                + Constants.KEY_MOVIE_GENRE + " TEXT);";
 
         db.execSQL(CREATE_MOVIE_TABLE);
 
@@ -53,6 +54,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Constants.KEY_MOVIE_IMAGE, movie.getImage());
         values.put(Constants.KEY_MOVIE_RATING, String.valueOf(movie.getRating()));
         values.put(Constants.KEY_RELEASE_YEAR, String.valueOf(movie.getYear()));
+        values.put(Constants.KEY_MOVIE_GENRE, movie.getGenre());
 
         //insert the row
         db.insert(Constants.TABLE_NAME, null, values);
@@ -88,7 +90,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(Constants.TABLE_NAME, new String[] {
                 Constants.KEY_ID, Constants.KEY_MOVIE_TITLE, Constants.KEY_MOVIE_IMAGE,
-                Constants.KEY_MOVIE_RATING, Constants.KEY_RELEASE_YEAR}, null, null, null, null,
+                Constants.KEY_MOVIE_RATING, Constants.KEY_RELEASE_YEAR, Constants.KEY_MOVIE_GENRE}, null, null, null, null,
                 Constants.KEY_RELEASE_YEAR + " DESC");
 
         if (cursor.moveToFirst()) {
@@ -98,6 +100,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 movie.setImage(cursor.getString(cursor.getColumnIndex(Constants.KEY_MOVIE_IMAGE)));
                 movie.setRating(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constants.KEY_MOVIE_RATING))));
                 movie.setYear(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.KEY_RELEASE_YEAR))));
+                movie.setGenre(cursor.getString(cursor.getColumnIndex(Constants.KEY_MOVIE_GENRE)));
 
                 //add to the movieList
                 movieList.add(movie);

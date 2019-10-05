@@ -83,7 +83,8 @@ public class SplashActivity extends AppCompatActivity {
                                 movie.setImage(movieObj.getString("image"));
                                 movie.setRating(movieObj.getDouble("rating"));
                                 movie.setYear(movieObj.getInt("releaseYear"));
-                                Log.i("json:", movie.getTitle());
+                                movie.setGenre(movieObj.getString("genre"));
+                                Log.i("json:", movie.getGenre());
 
                                 //save to db
                                 db.addMovie(movie);
