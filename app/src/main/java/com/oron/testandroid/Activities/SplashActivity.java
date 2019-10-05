@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +26,7 @@ import org.json.JSONObject;
 public class SplashActivity extends AppCompatActivity {
 
     private DatabaseHandler db;
+    private Button startApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,23 @@ public class SplashActivity extends AppCompatActivity {
 
         db = new DatabaseHandler(this);
 
-        byPassActivity();
+//        byPassActivity();
+
+        if (db.getMoviesCount() < 1) {
+            saveMovieToDB();
+        }
+
+        startApp = findViewById(R.id.startApp);
+
+        startApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("start new activity:", "starting");
+                startActivity(new Intent(SplashActivity.this, MovieListActivity.class));
+                finish();
+            }
+        });
+
 
     }
 
@@ -85,19 +105,6 @@ public class SplashActivity extends AppCompatActivity {
         // Add JsonArrayRequest to the RequestQueue
         requestQueue.add(jsonArrayRequest);
 
-        startActivity(new Intent(SplashActivity.this, MovieListActivity.class));
-        finish();
-
     }
 
-    private void byPassActivity () {
-         //checks if database is empty: if not, then we just go to MovieListActivity and show all the items
-
-        if (db.getMoviesCount() > 0) {
-            startActivity(new Intent(SplashActivity.this, MovieListActivity.class));
-            finish();
-        } else {
-            saveMovieToDB();
-        }
-    }
 }

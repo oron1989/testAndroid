@@ -139,4 +139,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return cursor.getCount();
     }
+
+    public Boolean isExist(String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(Constants.TABLE_NAME, new String[] {Constants.KEY_MOVIE_TITLE, Constants.KEY_MOVIE_IMAGE,
+                Constants.KEY_MOVIE_RATING, Constants.KEY_RELEASE_YEAR}, Constants.KEY_MOVIE_TITLE + "=?", new String[] {String.valueOf(title)}, null, null, null, null);
+
+        if (cursor.getCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package com.oron.testandroid.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,8 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.oron.testandroid.Data.DatabaseHandler;
@@ -19,8 +22,14 @@ import com.oron.testandroid.Data.MovieRecyclerViewAdapter;
 import com.oron.testandroid.Model.Movie;
 import com.oron.testandroid.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class MovieListActivity extends AppCompatActivity {
 
@@ -30,6 +39,8 @@ public class MovieListActivity extends AppCompatActivity {
     private List<Movie> listItems;
     private DatabaseHandler db;
 
+    private ConstraintLayout constraintLayout;
+
     final Activity activity = this;
 
     @Override
@@ -37,12 +48,12 @@ public class MovieListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
-
-
         db = new DatabaseHandler(this);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        constraintLayout = findViewById(R.id.listViewID);
 
         movieList = new ArrayList<>();
         listItems = new ArrayList<>();
@@ -95,7 +106,35 @@ public class MovieListActivity extends AppCompatActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                //if qr contains data
+                try {
+                    Movie movie = new Movie();
+                    //converting the data to json
+                    JSONObject obj = new JSONObject(result.getContents());
+                    //setting values to movie obj
+                    movie.setTitle(obj.getString("title"));
+                    movie.setImage(obj.getString("image"));
+                    movie.setRating(obj.getDouble("rating"));
+                    movie.setYear(obj.getInt("releaseYear"));
+
+                    if (!db.isExist(movie.getTitle())){
+                        db.addMovie(movie);
+                        Toast.makeText(this, "movie add", Toast.LENGTH_LONG).show();
+                    } else {
+                        Snackbar.make(constraintLayout, "Current movie already exist in the Database", Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(this, "movie is exist", Toast.LENGTH_LONG).show();
+                    }
+
+                    Toast.makeText(this, movie.getTitle(), Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //if control comes here
+                    //that means the encoded format not matches
+                    //in this case you can display whatever data is available on the qrcode
+                    //to a toast
+
+                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
