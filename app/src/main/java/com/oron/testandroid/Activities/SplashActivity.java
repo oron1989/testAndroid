@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.oron.testandroid.Data.DatabaseHandler;
 import com.oron.testandroid.Model.Movie;
 import com.oron.testandroid.R;
+import com.oron.testandroid.Util.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,12 +57,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void saveMovieToDB () {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "https://api.androidhive.info/json/movies.json";
+//        String url = "https://api.androidhive.info/json/movies.json";
 
         // Initialize a new JsonArrayRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                url,
+                Constants.MY_URL,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override

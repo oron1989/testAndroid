@@ -113,6 +113,7 @@ public class MovieListActivity extends AppCompatActivity {
                     movie.setImage(obj.getString("image"));
                     movie.setRating(obj.getDouble("rating"));
                     movie.setYear(obj.getInt("releaseYear"));
+                    movie.setGenre(obj.getString("genre"));
 
                     if (!db.isExist(movie.getTitle())){
                         db.addMovie(movie);
