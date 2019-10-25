@@ -32,7 +32,7 @@ public class MovieListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MovieRecyclerViewAdapter adapter;
     private List<Movie> movieList;
-    private List<Movie> listItems;
+//    private List<Movie> listItems;
     private DatabaseHandler db;
 
     private ConstraintLayout constraintLayout;
@@ -52,23 +52,23 @@ public class MovieListActivity extends AppCompatActivity {
         constraintLayout = findViewById(R.id.listViewID);
 
         movieList = new ArrayList<>();
-        listItems = new ArrayList<>();
+//        listItems = new ArrayList<>();
 
         //get items from database
         movieList = db.getAllMovies();
 
-        for (Movie mov : movieList ) {
-             Movie movie = new Movie();
-             movie.setTitle(mov.getTitle());
-             movie.setImage(mov.getImage());
-             movie.setRating(mov.getRating());
-             movie.setYear(mov.getYear());
-             movie.setGenre(mov.getGenre());
+//        for (Movie mov : movieList ) {
+//             Movie movie = new Movie();
+//             movie.setTitle(mov.getTitle());
+//             movie.setImage(mov.getImage());
+//             movie.setRating(mov.getRating());
+//             movie.setYear(mov.getYear());
+//             movie.setGenre(mov.getGenre());
+//
+//             listItems.add(movie);
+//        }
 
-             listItems.add(movie);
-        }
-
-        adapter = new MovieRecyclerViewAdapter(this, listItems);
+        adapter = new MovieRecyclerViewAdapter(this, movieList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
